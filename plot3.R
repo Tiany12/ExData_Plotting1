@@ -1,0 +1,11 @@
+raw_data<- read.table("household_power_consumption.txt",sep=";",header = TRUE)
+raw_data2<- raw_data[as.character(raw_data$Date) %in% c("1/2/2007","2/2/2007"),]
+raw_data2$dateTime = paste(raw_data2$Date, raw_data2$Time)
+raw_data2$dateTime <- strptime(raw_data2$dateTime, "%d/%m/%Y %H:%M:%S")
+attach(raw_data2)
+png("plot3.png", width=480, height=480, units="px")
+plot(dateTime, as.numeric(as.character(Sub_metering_1)), type="l", xlab="", ylab="Energy sub metering", ylim=c(0,40))
+lines(dateTime, as.numeric(as.character(Sub_metering_2)), col="red")
+lines(dateTime, as.numeric(as.character(Sub_metering_3)), col="blue")
+legend("topright", lty=1, col = c("black", "red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3" ))
+dev.off()
